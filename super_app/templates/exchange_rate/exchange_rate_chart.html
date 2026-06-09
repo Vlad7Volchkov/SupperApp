@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+График курса валют
+{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+
+<form id="chartForm" method="get">
+
+    <label>Параметры графика валют:</label> <br>
+    {{ form_date }}
+    <br>
+    {{ form_currency }}
+     <br>
+    <input type="submit" value="Получить данные за период">
+</form>
+
+<div>
+    {{ graph|safe }}
+</div>
+{% endblock %}
