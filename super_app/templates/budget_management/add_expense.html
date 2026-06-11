@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Добвление расхода
+{% endblock %}
+
+{% block content %}
+<div>
+    <form method="post">
+        {% csrf_token %}
+        {% autoescape off %}
+            {{ form.as_p }}
+        {% endautoescape %}
+        <input type="submit">
+    </form>
+</div>
+{% endblock %}

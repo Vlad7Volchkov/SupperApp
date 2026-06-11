@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Добвление дохода
+{% endblock %}
+
+{% block content %}
+<div>
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit">
+    </form>
+</div>
+{% endblock %}

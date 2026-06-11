@@ -1,4 +1,17 @@
 <header>
-    <a href="{% url 'homepage:homepage' %}">Главный экран</a>
-    <a href="{% url 'exchange_rate:exchange_rate_chart' %}">Курсы валют</a>
+    <nav>
+        <a href="{% url 'homepage:homepage' %}">Главный экран</a>
+        <a href="{% url 'exchange_rate:exchange_rate_chart' %}">Курсы валют</a>
+        <a href="{% url 'budget_management:wallet' %}">Менеджер накоплений</a>
+        <a href="{% url 'homepage:nowhere' %}">Утилита 3</a>
+        <a href="{% url 'homepage:nowhere' %}">Утилита 4</a>
+        <a href="{% url 'homepage:nowhere' %}">Утилита 5</a>
+        {% if user.is_authenticated %}
+            {{ user.username }}
+            <a href="{% url 'accounts:logout' %}">Выйти из аккаунта</a>
+        {% else %}
+            <a href="{% url 'accounts:register' %}">Войти в аккаунт</a>
+            <a href="{% url 'accounts:signup' %}">Создать аккаунт</a>
+        {% endif %}
+    </nav>
 </header>

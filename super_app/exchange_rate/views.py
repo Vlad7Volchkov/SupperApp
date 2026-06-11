@@ -37,6 +37,6 @@ def exchange_rate(request):
             data = client.get_exchange_rate_for_several_currency(date_from, date_to, currency_ids)
             graph = make_exchange_rate_graph(data)
             context['graph'] = graph
-        except Exception:
+        except Exception as e:
             context['graph'] = 'При получении данных произошла ошибка'
     return render(request, 'exchange_rate/exchange_rate_chart.html', context)

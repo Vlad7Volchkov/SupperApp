@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Управление бюджетом
+{% endblock %}
+
+{% block content %}
+<div>
+    <p>
+        Баланс: {{ wallet.balance }}
+    </p>
+    <p>
+        Последние транзакции:
+    </p>
+        {% for transaction in transactions %}
+            <p>
+                {% if transaction.income is not None %}
+                   Доход: {{ transaction.income|lower }},
+                {% endif %}
+
+                {% if transaction.expense is not None %}
+                    Расход: {{ transaction.expense|lower }},
+                {% endif %}
+
+                на сумму: {{ transaction.amount }}
+            </p>
+        {% endfor %}
+
+    <p>
+        Цели накоплений:
+    </p>
+    <p>
+        {% for saving_goal in saving_goals %}
+            {{ saving_goal.description }}: <br>
+            {% if saving_goal.is_completed %}
+                Вы достигли цели в {{ saving_goal.goal }}<br>
+            {% else %}
+                Вам осталось: {{ saving_goal.remained_part }} до {{ saving_goal.goal }}<br>
+            {% endif %}
+        {% endfor %}
+    </p>
+
+    <p>
+        <a href="{% url 'budget_management:add_income' %}">Добавить доход</a>
+    </p>
+    <p>
+        <a href="{% url 'budget_management:add_expense' %}">Добавить расход</a>
+    </p>
+        <form method="post">
+            <label>Добавить новую цель накопления</label>
+            {% csrf_token %}
+            {{ form_savings.as_p }}
+            <input type="submit">
+        </form>
+</div>
+<div>
+    {{ pie|safe }}
+</div>
+{% endblock %}
