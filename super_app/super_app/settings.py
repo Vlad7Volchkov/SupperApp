@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'homepage.apps.HomepageConfig',
     'accounts.apps.AccountsConfig',
     'budget_management.apps.BudgetManagementConfig',
+    'habits_tracker.apps.HabitsTrackerConfig',
+    'django_q',
 ]
 
 MIDDLEWARE = [
@@ -117,3 +119,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+Q_CLUSTER = {
+    'name': 'DjangoQ',
+    'workers': 4,
+    'recycle': 500,
+    'timeout': 60,
+    'retry': 120,
+    'orm': 'default',
+    'queue_limit': 50,
+    'bulk': 10,
+    'max_attempts': 3,
+    'sync': False,
+    'catch_up': True,
+}

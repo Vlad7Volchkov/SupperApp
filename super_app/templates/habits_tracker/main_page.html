@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Трекер привычек
+{% endblock %}
+
+{% block content %}
+    <a href="{% url 'habits_tracker:add_habit' %}">Добавить привычку</a>
+    <p>Текущая серия: {{ serie.current_day_count }} </p>
+    <p>Лучшая серия: {{ serie.best_day_count }} </p>
+
+    {% for habit in habits %}
+        <p>
+            {{ habit.name }}
+            {% if habit.current_tracked_id is None %}
+                <a href="{% url 'habits_tracker:add_habit_tracked' habit.id %}">Поставить статус привычки на сегодня</a>
+            {% else %}
+                <a href="{% url 'habits_tracker:edit_habit_tracked' habit.current_tracked_id %}">Изменить статус привычки на сегодня</a>
+            {% endif %}
+            <a href="{% url 'habits_tracker:edit_habit' habit.id %}">Редактировать привычку</a>
+            <a href="{% url 'habits_tracker:delete_habit' habit.id %}">Удалить привычку</a>
+        </p>
+    {% endfor %}
+    <p>
+        <a href="{% url 'habits_tracker:download' %}">Скачать данные по привычкам</a>
+    </p>
+{% endblock %}

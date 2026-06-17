@@ -4,7 +4,12 @@ from .models import UserWallet, Transaction, SavingGoals
 from .forms import IncomeForm, ExpenseForm, SavingsGoalsForm
 from.transactionManager import TransactionManager
 from .plotly_func import make_pie_chart
+from django import http
+from django.views.generic import DetailView
 
+
+class SavingGoalsView(DetailView):
+    model = SavingGoals
 
 @login_required(login_url='/accounts/register/')
 def wallet_view(request):
@@ -23,7 +28,7 @@ def wallet_view(request):
             description = form_savings.cleaned_data['description']
             saving_goal = SavingGoals.objects.create(user_wallet=wallet, goal=goal, description=description)
             saving_goal.save()
-            form_savings = SavingsGoalsForm()
+            return http.HttpResponseRedirect('')
 
     context['form_savings'] = form_savings
     return render(request, 'budget_management/wallet.html', context)
@@ -38,7 +43,7 @@ def add_income_view(request):
             amount = form.cleaned_data['amount']
             income = form.cleaned_data['income']
             TransactionManager.save_income_transaction(wallet, amount, income)
-            form = IncomeForm()
+            return http.HttpResponseRedirect('')
     else:
         form = IncomeForm()
     context = {'form': form}
@@ -59,7 +64,7 @@ def add_expense_view(request):
                     TransactionManager.save_expense_transaction(wallet, amount, expense_text)
                 else:
                     TransactionManager.save_expense_transaction(wallet, amount, expense.name)
-                form = ExpenseForm(user_wallet=wallet)
+                return http.HttpResponseRedirect('')
             except ValueError as e:
                 form.errors['expense'] = str(e)
     else:
